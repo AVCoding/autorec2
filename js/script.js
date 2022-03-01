@@ -90,8 +90,9 @@
   peer.on('error', function(){
     alert('close text ERROR (internet included)');
     alert(myID);
-    document.querySelector("#videoCaller-" + myID).remove();
-    
+    if (document.querySelector("#videoCaller-" + myID)) {
+      document.querySelector("#videoCaller-" + myID).remove();
+    }
   });
 
   peer.on('disconnected', function(){
