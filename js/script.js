@@ -23,10 +23,8 @@
       // var conn;
       $(document).on('click','.autorecOn', function(){
           alert('autorec started');
-          
 
           var callerId;
-
 
           // start call
 
@@ -72,12 +70,12 @@
 
           
 
-          // peer.on('close', function(){
-          //   alert('close text');
-          //   document.getElementById("videoCaller-" + callerId).remove();
-          //   peer.destroy();
-          //   // $("#videoCaller-" + peer.id + '"').remove();
-          // });
+          peer.on('close', function(){
+            alert('close text');
+            document.getElementById("videoCaller-" + callerId).remove();
+            peer.destroy();
+            // $("#videoCaller-" + peer.id + '"').remove();
+          });
 
      // =======
   });
@@ -97,18 +95,16 @@
 
   $(document).on('click','.autorecOff', function(){
     alert('autorec OFF');
-    pc.send(myID);
-    if (document.querySelector("#videoCaller-" + myID) != null) {
-      document.querySelector("#videoCaller-" + myID).remove();
+    if (myID != undefined) {
+      pc.send(myID);
+      if (document.querySelector("#videoCaller-" + myID) != null) {
+        document.querySelector("#videoCaller-" + myID).remove();
+      }
+
     }
+    
   });
 
-  peer.on('close', function(){
-    alert('close text');
-    document.getElementById("videoCaller-" + myID).remove();
-    peer.destroy();
-    // $("#videoCaller-" + peer.id + '"').remove();
-  });
 
   peer.on('error', function(){
     alert('error text ERROR (internet included)');
@@ -160,7 +156,7 @@
   // var network;
               
   peer.on("call", (call) => {
-    if (confirm(`Accept call from ${call.peer}?`)) {
+    // if (confirm(`Accept call from ${call.peer}?`)) {
       // grab the camera and mic
       navigator.mediaDevices
         .getUserMedia({ video: true, audio: true })
@@ -238,10 +234,10 @@
           console.log("Failed to get local stream:", err);
         });
     
-    } else {
-      // user rejected the call, close it
-      call.close();
-    }
+    // } else {
+    //   // user rejected the call, close it
+    //   call.close();
+    // }
   });
 
 
