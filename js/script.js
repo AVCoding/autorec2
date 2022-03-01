@@ -230,8 +230,8 @@
   // record of video starts
   let countRec = 0;
   function videoRecOn(recID, currentVideo){
-    count = count + 1;
-    if(count == 2){
+    countRec = countRec + 1;
+    if(countRec == 2){
      return
     }
     else {
