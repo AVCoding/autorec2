@@ -228,70 +228,71 @@
 
   
   // record of video starts
-  let countRec = 0;
   function videoRecOn(recID, currentVideo){
+    console.log(recID);
+    if (currentVideo.srcObject != null) {
+        alert('ners');
+
+        mediaArr[recID] =  new MediaRecorder(currentVideo.srcObject);
+        mediaArr[recID].start(1000);
+        var parts = [];
+
+        mediaArr[recID].ondataavailable = function(e){      
+          parts.push(e.data);
+          console.log(parts);
+        }
+        mediaArr[recID]['blobParts'] = parts;
+
+        console.log('mediaArr[recID].state');
+        console.log(mediaArr[recID].state);
+    }
+    else{
+      alert('no stream detected');
+    }
+  
+  }
+  // record of video stops
+  let countRec = 0;
+  function videoRecOff(recID){
     countRec = countRec + 1;
     if(countRec == 2){
      return
     }
     else {
-      console.log(recID);
-      if (currentVideo.srcObject != null) {
-          alert('ners');
+      if (mediaArr[recID] != undefined) {
 
-          mediaArr[recID] =  new MediaRecorder(currentVideo.srcObject);
-          mediaArr[recID].start(1000);
-          var parts = [];
-
-          mediaArr[recID].ondataavailable = function(e){      
-            parts.push(e.data);
-            console.log(parts);
-          }
-          mediaArr[recID]['blobParts'] = parts;
-
-          console.log('mediaArr[recID].state');
+        mediaArr[recID].stop();
+        mediaArr[recID].onstop = function(e) {
+          console.log('mediaArr[recID].state in OFF');
           console.log(mediaArr[recID].state);
-      }
-      else{
-        alert('no stream detected');
-      }
-    }
-  }
-  // record of video stops
-  function videoRecOff(recID){
-    if (mediaArr[recID] != undefined) {
 
-      mediaArr[recID].stop();
-      mediaArr[recID].onstop = function(e) {
-        console.log('mediaArr[recID].state in OFF');
-        console.log(mediaArr[recID].state);
-
-        if ( mediaArr[recID]['blobParts'] ) {
-          var blob =  new Blob(mediaArr[recID]['blobParts'], {
-            type: 'video/webm'
-            // type: 'video\/mp4'
-          });
-          const url =  URL.createObjectURL(blob);
-          const a =  document.createElement('a');
-          document.body.appendChild(a);
-          // a.style = 'display: none';
-          a.href =  url;
-          a.text = 'jkbhsdjs';
-          a.download = 'test.webm';
-          // a.download = 'test.mp4';
-          a.click();
-          // delete  mediaArr[recID];
-          currentCall[recID].close();
-          if (document.getElementById("video-" + recID).closest('.live') != null) {
-            document.getElementById("video-" + recID).closest('.live').remove();
+          if ( mediaArr[recID]['blobParts'] ) {
+            var blob =  new Blob(mediaArr[recID]['blobParts'], {
+              type: 'video/webm'
+              // type: 'video\/mp4'
+            });
+            const url =  URL.createObjectURL(blob);
+            const a =  document.createElement('a');
+            document.body.appendChild(a);
+            // a.style = 'display: none';
+            a.href =  url;
+            a.text = 'jkbhsdjs';
+            a.download = 'test.webm';
+            // a.download = 'test.mp4';
+            a.click();
+            // delete  mediaArr[recID];
+            currentCall[recID].close();
+            if (document.getElementById("video-" + recID).closest('.live') != null) {
+              document.getElementById("video-" + recID).closest('.live').remove();
+            }
+            //peer.destroy();
+            alert('Disconnected');
           }
-          //peer.destroy();
-          alert('Disconnected');
+
         }
 
-      }
-
-    }    
+      }   
+    } 
   }
   
   // start record peer media - video , audio
