@@ -16,7 +16,7 @@
   var mediaArr = {};
 
   var pc ;
-    peer.on("open", function (id) {
+  peer.on("open", function (id) {
       document.getElementById("uuid").textContent = id;
       myID = id;
 
@@ -81,14 +81,6 @@
 
      // =======
     });
-
-    peer.on('close', function(){
-      alert('close text');
-      document.getElementById("videoCaller-" + myID).remove();
-      peer.destroy();
-      // $("#videoCaller-" + peer.id + '"').remove();
-    });
-
    // =======
 
 
@@ -101,6 +93,13 @@
     });
 
 
+  });
+
+  peer.on('close', function(){
+    alert('close text');
+    document.getElementById("videoCaller-" + myID).remove();
+    peer.destroy();
+    // $("#videoCaller-" + peer.id + '"').remove();
   });
 
   peer.on('error', function(){
