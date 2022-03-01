@@ -70,14 +70,23 @@
             });
           });
 
-          peer.on('close', function(){
-            alert('close text');
-            document.getElementById("videoCaller-" + callerId).remove();
-            peer.destroy();
-            // $("#videoCaller-" + peer.id + '"').remove();
-          });
+          
+
+          // peer.on('close', function(){
+          //   alert('close text');
+          //   document.getElementById("videoCaller-" + callerId).remove();
+          //   peer.destroy();
+          //   // $("#videoCaller-" + peer.id + '"').remove();
+          // });
 
      // =======
+    });
+
+    peer.on('close', function(){
+      alert('close text');
+      document.getElementById("videoCaller-" + myID).remove();
+      peer.destroy();
+      // $("#videoCaller-" + peer.id + '"').remove();
     });
 
    // =======
