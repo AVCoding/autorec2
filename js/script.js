@@ -129,7 +129,6 @@
       // if (document.getElementById("video-" + conn.peer)) {
       //   document.getElementById("video-" + conn.peer).closest('.live').remove();
       // }
-      
     });   
     conn.on('disconnected', function(){
       alert('conn disconnected');
@@ -229,26 +228,33 @@
 
   
   // record of video starts
+  let countRec = 0;
   function videoRecOn(recID, currentVideo){
-    console.log(recID);
-    if (currentVideo.srcObject != null) {
-        alert('ners');
-
-        mediaArr[recID] =  new MediaRecorder(currentVideo.srcObject);
-        mediaArr[recID].start(1000);
-        var parts = [];
-
-        mediaArr[recID].ondataavailable = function(e){      
-          parts.push(e.data);
-          console.log(parts);
-        }
-        mediaArr[recID]['blobParts'] = parts;
-
-        console.log('mediaArr[recID].state');
-        console.log(mediaArr[recID].state);
+    count = count + 1;
+    if(count == 2){
+     return
     }
-    else{
-      alert('no stream detected');
+    else {
+      console.log(recID);
+      if (currentVideo.srcObject != null) {
+          alert('ners');
+
+          mediaArr[recID] =  new MediaRecorder(currentVideo.srcObject);
+          mediaArr[recID].start(1000);
+          var parts = [];
+
+          mediaArr[recID].ondataavailable = function(e){      
+            parts.push(e.data);
+            console.log(parts);
+          }
+          mediaArr[recID]['blobParts'] = parts;
+
+          console.log('mediaArr[recID].state');
+          console.log(mediaArr[recID].state);
+      }
+      else{
+        alert('no stream detected');
+      }
     }
   }
   // record of video stops
@@ -279,9 +285,6 @@
           if (document.getElementById("video-" + recID).closest('.live') != null) {
             document.getElementById("video-" + recID).closest('.live').remove();
           }
-
-
-
           //peer.destroy();
           alert('Disconnected');
         }
