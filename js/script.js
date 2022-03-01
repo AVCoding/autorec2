@@ -70,8 +70,6 @@
             });
           });
 
-          
-
           peer.on('close', function(){
             alert('close text');
             document.getElementById("videoCaller-" + callerId).remove();
