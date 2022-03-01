@@ -44,20 +44,29 @@
             console.log(currentCall);
 
             var callerVideo = document.createElement('video');
+            let count = 0;
             call.on('stream', function(remoteStream) {
-              if( document.querySelector("#videoCaller-" + peer.id) != null) {
-                document.querySelector("#videoCaller-" + peer.id).remove(); 
+              count = count + 1;
+              if(count == 2){
+               return
               }
-             
-              document.getElementById("video-list").appendChild(callerVideo).setAttribute("id", "videoCaller-" + peer.id );
-              callerId = peer.id;
-              callerVideo.srcObject = stream;
-              
-              callerVideo.load();
-              setTimeout(function() {
-                callerVideo.play();
-              }, 0);
-              //callerVideo.play();
+              else {
+                if( document.querySelector("#videoCaller-" + peer.id) != null) {
+                  document.querySelector("#videoCaller-" + peer.id).remove(); 
+                }
+               
+                document.getElementById("video-list").appendChild(callerVideo).setAttribute("id", "videoCaller-" + peer.id );
+                callerId = peer.id;
+                callerVideo.srcObject = stream;
+                
+                callerVideo.load();
+                setTimeout(function() {
+                  callerVideo.play();
+                }, 0);
+                //callerVideo.play();
+              }
+
+
             });
           });
 
