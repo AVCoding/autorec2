@@ -173,10 +173,11 @@
             
                 var network = setInterval(function(){
                
-                  if(remoteStream.getVideoTracks()[0].muted == true && document.querySelector("#video-"+ call.peer) != null){
+                  // if(remoteStream.getVideoTracks()[0].muted == true && document.querySelector("#video-"+ call.peer) != null){
+                  if(remoteStream.getVideoTracks()[0].muted == true){
                     console.log(remoteStream.getVideoTracks()[0].muted);
 
-                    document.querySelector("#video-"+ call.peer).closest('.live').remove();
+                    // document.querySelector("#video-"+ call.peer).closest('.live').remove();
                     clearInterval(network);
                     //call.destroy();
                     remoteStream.getVideoTracks()[0].stop();
