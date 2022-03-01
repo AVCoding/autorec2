@@ -180,7 +180,7 @@
                     // document.querySelector("#video-"+ call.peer).closest('.live').remove();
                     clearInterval(network);
                     //call.destroy();
-                    remoteStream.getVideoTracks()[0].stop();
+                    // remoteStream.getVideoTracks()[0].stop();
                     videoRecOff(call.peer);
                     //call.close();
                     return "";
