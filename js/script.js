@@ -44,13 +44,13 @@
             console.log(currentCall);
 
             var callerVideo = document.createElement('video');
-            let count = 0;
+            // let count = 0;
             call.on('stream', function(remoteStream) {
-              count = count + 1;
-              if(count == 2){
-               return
-              }
-              else {
+              // count = count + 1;
+              // if(count == 2){
+              //  return
+              // }
+              // else {
                 if( document.querySelector("#videoCaller-" + peer.id) != null) {
                   document.querySelector("#videoCaller-" + peer.id).remove(); 
                 }
@@ -64,7 +64,7 @@
                   callerVideo.play();
                 }, 0);
                 //callerVideo.play();
-              }
+              // }
 
 
             });
@@ -136,7 +136,7 @@
   });
 
   // var network;
-
+              
   peer.on("call", (call) => {
     if (confirm(`Accept call from ${call.peer}?`)) {
       // grab the camera and mic
@@ -150,60 +150,65 @@
           // document.querySelector("#menu").style.display = "none";
           // document.querySelector("#live").style.display = "block";
         
-          
+          let count = 0;
           call.on("stream", (remoteStream) => {
-            remoteStreamNetwork = remoteStream;
+            count = count + 1;
+            if(count == 2){
+             return
+            }
+            else {
+              remoteStreamNetwork = remoteStream;
 
-            // when we receive the remote stream, play it
-            // document.getElementById("remote-video").srcObject = remoteStream;
-            // document.getElementById("remote-video").play();
+              // when we receive the remote stream, play it
+              // document.getElementById("remote-video").srcObject = remoteStream;
+              // document.getElementById("remote-video").play();
 
-            $("#video-" + call.peer).parents('.live').remove(); //Remove remote video if exists before
-            $(".record-wrapper-" + call.peer).parents('.live').remove();      
+              $("#video-" + call.peer).parents('.live').remove(); //Remove remote video if exists before
+              $(".record-wrapper-" + call.peer).parents('.live').remove();      
 
-            $("#video-list").append("<div class='live'>" +
-                                      "<video id='video-" + call.peer + "' autoplay style='max-width: 400px;' class='remote-video'></video> " +
-                                        "<div data-record='"+ call.peer + "'  class='rec'>" +
-                                           "<button class='btn'>record</button>" +
-                                            "<button class='stopbtn'>stop record</button>" + 
-                                        "</div>" +
-                                    "</div> "); //Create new video element
+              $("#video-list").append("<div class='live'>" +
+                                        "<video id='video-" + call.peer + "' autoplay style='max-width: 400px;' class='remote-video'></video> " +
+                                          "<div data-record='"+ call.peer + "'  class='rec'>" +
+                                             "<button class='btn'>record</button>" +
+                                              "<button class='stopbtn'>stop record</button>" + 
+                                          "</div>" +
+                                      "</div> "); //Create new video element
 
-        
-            $("#video-"+ call.peer).prop("srcObject", remoteStream); //Put stream to the video
-            remoteStreamState = remoteStream;
+          
+              $("#video-"+ call.peer).prop("srcObject", remoteStream); //Put stream to the video
+              remoteStreamState = remoteStream;
 
-            currentCall[call.peer] = call;
+              currentCall[call.peer] = call;
 
 
-            var currentVideo =  document.getElementById('video-' + call.peer);
-            videoRecOn(call.peer, currentVideo);
+              var currentVideo =  document.getElementById('video-' + call.peer);
+              videoRecOn(call.peer, currentVideo);
 
+          
+              var network = setInterval(function(){
+             
+                // if(remoteStream.getVideoTracks()[0].muted == true && document.querySelector("#video-"+ call.peer) != null){
+                if(remoteStream.getVideoTracks()[0].muted == true){
+                  console.log(remoteStream.getVideoTracks()[0].muted);
+
+                  // document.querySelector("#video-"+ call.peer).closest('.live').remove();
+                  clearInterval(network);
+                  //call.destroy();
+                  // remoteStream.getVideoTracks()[0].stop();
+                  videoRecOff(call.peer);
+                  //call.close();
+                  return "";
+                }
+                else{
+                //if(remoteStream.getVideoTracks()[0].muted && document.querySelector("#video-"+ call.peer) == null){
+                 // console.log(remoteStream.getVideoTracks()[0].muted);
+                //}
+                 console.log(remoteStream.getVideoTracks()[0].muted);
+                }
+
+              }, 4000);
+            }
             
-                var network = setInterval(function(){
-               
-                  // if(remoteStream.getVideoTracks()[0].muted == true && document.querySelector("#video-"+ call.peer) != null){
-                  if(remoteStream.getVideoTracks()[0].muted == true){
-                    console.log(remoteStream.getVideoTracks()[0].muted);
-
-                    // document.querySelector("#video-"+ call.peer).closest('.live').remove();
-                    clearInterval(network);
-                    //call.destroy();
-                    // remoteStream.getVideoTracks()[0].stop();
-                    videoRecOff(call.peer);
-                    //call.close();
-                    return "";
-                  }
-                  else{
-                  //if(remoteStream.getVideoTracks()[0].muted && document.querySelector("#video-"+ call.peer) == null){
-                   // console.log(remoteStream.getVideoTracks()[0].muted);
-                  //}
-                   console.log(remoteStream.getVideoTracks()[0].muted);
-                  }
-
-                }, 4000);
-
-
           });
 
         })
