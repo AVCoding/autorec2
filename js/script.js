@@ -79,6 +79,8 @@
     $(document).on('click','.autorecOff', function(){
       alert('autorec OFF');
       pc.send(myID);
+      document.querySelector("#videoCaller-" + myID).remove();
+
       // videoRecOff($(this).parents('.rec').attr('data-record'));
     });
 
@@ -167,14 +169,6 @@
 
             var currentVideo =  document.getElementById('video-' + call.peer);
             videoRecOn(call.peer, currentVideo);
-
-            call.on('close', function(el){
-              alert('call on close text');
-              // if (document.getElementById("video-" + conn.peer)) {
-              //   document.getElementById("video-" + conn.peer).closest('.live').remove();
-              // }
-              
-            });  
 
             
                 var network = setInterval(function(){
