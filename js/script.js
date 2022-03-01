@@ -80,19 +80,27 @@
           // });
 
      // =======
-    });
+  });
    // =======
 
 
-    $(document).on('click','.autorecOff', function(){
-      alert('autorec OFF');
-      pc.send(myID);
-      if (document.querySelector("#videoCaller-" + myID) != null) {
-        document.querySelector("#videoCaller-" + myID).remove();
-      }
-    });
+    // $(document).on('click','.autorecOff', function(){
+    //   alert('autorec OFF');
+    //   pc.send(myID);
+    //   if (document.querySelector("#videoCaller-" + myID) != null) {
+    //     document.querySelector("#videoCaller-" + myID).remove();
+    //   }
+    // });
 
 
+  });
+
+  $(document).on('click','.autorecOff', function(){
+    alert('autorec OFF');
+    pc.send(myID);
+    if (document.querySelector("#videoCaller-" + myID) != null) {
+      document.querySelector("#videoCaller-" + myID).remove();
+    }
   });
 
   peer.on('close', function(){
@@ -103,7 +111,7 @@
   });
 
   peer.on('error', function(){
-    alert('close text ERROR (internet included)');
+    alert('error text ERROR (internet included)');
     alert(myID);
     if (document.querySelector("#videoCaller-" + myID)) {
       document.querySelector("#videoCaller-" + myID).remove();
