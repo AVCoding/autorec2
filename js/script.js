@@ -129,6 +129,11 @@
  // answer call
 
   peer.on('connection', function(conn) {
+    peer.on('close', function(){
+        alert('peer conn close text');
+        // document.getElementById("videoCaller-" + myID).remove();
+        // peer.destroy();
+    });
     conn.on('data', function(data){
       // Will print 'this is a test'
       console.log('data');
