@@ -88,9 +88,9 @@
     $(document).on('click','.autorecOff', function(){
       alert('autorec OFF');
       pc.send(myID);
-      document.querySelector("#videoCaller-" + myID).remove();
-
-      // videoRecOff($(this).parents('.rec').attr('data-record'));
+      if (document.querySelector("#videoCaller-" + myID) != null) {
+        document.querySelector("#videoCaller-" + myID).remove();
+      }
     });
 
 
@@ -132,6 +132,9 @@
     });   
     conn.on('disconnected', function(){
       alert('conn disconnected');
+    });
+    conn.on('error', function(){
+      alert('conn error:  server not available');
     });
   });
 
@@ -208,7 +211,7 @@
 
               }, 4000);
             }
-            
+
           });
 
         })
