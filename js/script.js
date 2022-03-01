@@ -264,8 +264,10 @@
           a.click();
           // delete  mediaArr[recID];
           currentCall[recID].close();
+          if (document.getElementById("video-" + recID).closest('.live') != null) {
+            document.getElementById("video-" + recID).closest('.live').remove();
+          }
 
-          document.getElementById("video-" + recID).closest('.live').remove();
 
 
           //peer.destroy();
